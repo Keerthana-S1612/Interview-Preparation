@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spring Boot Connection</title>
+</head>
+<body>
+<h2>User Details</h2>
+<!-- Input Box-gal -->
+<input type="text" id="name" placeholder="Enter Name">
+<input type="number" id="age" placeholder="Enter Age">
+
+<!-- Data-va anuppa oru button -->
+<button onclick="sendData()">Add to Database</button>
+
+<script>
+    async function sendData() {
+        // 1. Input values-ah edukirom
+        const nameValue = document.getElementById('name').value;
+        const ageValue = document.getElementById('age').value;
+
+        // 2. Java-ku puriyura maathiri oru "Object" create panroom
+        const entityData = {
+            name: nameValue,
+            age: parseInt(ageValue)
+        };
+
+        // 3. FETCH: Inga thaan "Vathalai" tatturoom
+        const response = await fetch('http://localhost:8080/entities', {
+            method: 'POST', // Naan data-va 'anuppuren' nu solrathu
+            headers: {
+                'Content-Type': 'application/json' // Anuppura data JSON format nu solrathu
+            },
+            body: JSON.stringify(entityData) // Intha function thaan JSON-ah mathum
+        });
+
+        // 4. Result-ah check panroom
+        if (response.ok) {
+            alert("Database save connect!");
+        } else {
+            alert("Error: Java not connect!");
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+import java.util.*;
+
+class FoodItem {
+    int fId;
+    String fName;
+    double price;
+
+    FoodItem(int fId, String fName, double price) {
+        this.fId = fId;
+        this.fName = fName;
+        this.price = price;
+    }
+
+    void display() {
+        System.out.println(fId + ". " + fName + " - Rs." + price);
+    }
+}
+
+public class FoodApp {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        // 1. Predefined Menu
+        ArrayList<FoodItem> menu = new ArrayList<>();
+        menu.add(new FoodItem(1, "Biryani", 250));
+        menu.add(new FoodItem(2, "Parotta", 50));
+        menu.add(new FoodItem(3, "Dosa", 40));
+
+        // 2. Display Menu to User
+        System.out.println("--- WELCOME TO FOOD COURT ---");
+        for (FoodItem f : menu) {
+            f.display();
+        }
+
+        // 3. Get User Inputs
+        System.out.print("\nEnter your Name: ");
+        String userName = sc.nextLine();
+
+        System.out.print("Enter Food ID to order: ");
+        int selectedId = sc.nextInt();
+
+        System.out.print("Enter Quantity: ");
+        int qty = sc.nextInt();
+
+        // 4. Process Order & Calculate Bill
+        boolean found = false;
+        for (FoodItem f : menu) {
+            if (f.fId == selectedId) {
+                double total = f.price * qty;
+                System.out.println("\n--- ORDER SUMMARY ---");
+                System.out.println("Customer: " + userName);
+                System.out.println("Item: " + f.fName);
+                System.out.println("Quantity: " + qty);
+                System.out.println("Total Bill: Rs." + total);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Invalid Food ID! Please try again.");
+        }
+        
+        sc.close();
+    }
+}
